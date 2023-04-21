@@ -1,5 +1,5 @@
 import http from "node:http";
-import { makeApp } from "./app.js";
+import { makeApp } from "./app/app.js";
 
 const PORT = 3000;
 
