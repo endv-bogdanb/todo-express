@@ -1,7 +1,7 @@
+import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import request from "supertest";
 import { makeApp } from "../app/app.js";
-import assert from "node:assert";
 
 describe("[ROUTE] - health", () => {
   it("should handle GET /health", async () => {
