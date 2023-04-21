@@ -1,3 +1,5 @@
+import crypto from "node:crypto";
+
 export interface ITodo {
   id: string;
   title: string;
@@ -14,9 +16,23 @@ export class TodoRepository {
     return this.todos;
   };
 
-  static create = async (todo: ITodo) => {
-    this.todos.push(todo);
-    console.log("TODO ??? ", this.todos);
+  static create = async (todo: Omit<ITodo, "id">) => {
+    this.todos.push({ ...todo, id: crypto.randomUUID() });
+    return this.todos[this.todos.length - 1]!;
+  };
+
+  static update = async (id: string, todo: ITodo) => {
+    if (id !== todo.id) {
+      throw new Error("Todo not found");
+    }
+
+    this.todos = this.todos.map((todoRecord) => {
+      if (todoRecord.id !== id) {
+        return todoRecord;
+      }
+      return todo;
+    });
+
     return todo;
   };
 

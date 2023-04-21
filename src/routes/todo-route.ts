@@ -1,4 +1,3 @@
-import crypto from "node:crypto";
 import { Router } from "./internals/router.js";
 import { ITodo, TodoRepository } from "../repository/todo-repository.js";
 
@@ -11,8 +10,8 @@ router
   })
   .post<{}, { todo: ITodo }, Omit<ITodo, "id">>(async (req, res) => {
     const { title, description } = req.body;
-    const todoRecord = { id: crypto.randomUUID(), title, description };
-    await TodoRepository.create(todoRecord);
+    const todo = { title, description };
+    const todoRecord = await TodoRepository.create(todo);
     return res.status(200).json({ todo: todoRecord }).end();
   });
 
@@ -28,4 +27,9 @@ router
     }
 
     return res.status(200).json({ todo: todoRecord });
+  })
+  .put<{ id: string }, { todo: ITodo }, ITodo>(async (req, res) => {
+    const { id } = req.params;
+    const todoRecord = await TodoRepository.update(id, req.body);
+    return res.status(200).json({ todo: todoRecord }).end();
   });

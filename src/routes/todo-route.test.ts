@@ -14,12 +14,10 @@ describe("[ROUTE] - todo", () => {
     const app = (await import("../app/app.js")).makeApp();
 
     const todo1 = await TodoRepository.create({
-      id: "1",
       title: "Todo title",
       description: "Todo description",
     });
     const todo2 = await TodoRepository.create({
-      id: "2",
       title: "Todo title",
       description: "Todo description",
     });
@@ -57,15 +55,30 @@ describe("[ROUTE] - todo", () => {
     const app = makeApp();
 
     const todo = await TodoRepository.create({
-      id: "test-uuid-value",
+      title: "Todo title",
+      description: "Todo description",
+    });
+
+    const response = await request(app).get(`/todos/${todo.id}`).expect(200);
+
+    assert.deepEqual(response.body, { todo: todo });
+  });
+
+  it("should handle PUT /todos/:id", async () => {
+    const app = makeApp();
+
+    const todo = await TodoRepository.create({
       title: "Todo title",
       description: "Todo description",
     });
 
     const response = await request(app)
-      .get("/todos/test-uuid-value")
+      .put(`/todos/${todo.id}`)
+      .send({ ...todo, title: "Todo title modified" })
       .expect(200);
 
-    assert.deepEqual(response.body, { todo: todo });
+    assert.deepEqual(response.body, {
+      todo: { ...todo, title: "Todo title modified" },
+    });
   });
 });
