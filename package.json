@@ -1,0 +1,17 @@
+{
+  "name": "todo-express",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "prestart": "tsc",
+    "start": "concurrently \"tsc --watch\" \"node --watch dist/index.js\"",
+    "test": "tsc -p test.tsconfig.jsonc && node --test",
+    "test:watch": "concurrently \"tsc -p test.tsconfig.jsonc --watch\" \"node --test --watch  __tests__\""
+  },
+  "devDependencies": {
+    "@types/node": "18.13.0",
+    "concurrently": "8.0.1",
+    "typescript": "5.0.4"
+  }
+}

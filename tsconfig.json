@@ -1,0 +1,8 @@
+{
+  "extends": "./base.tsconfig.jsonc",
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules/", "dist/", "__tests__/", "**/**/*.test.ts"]
+}
